@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+
 from foodgram.constants import (MINIMUM_COOCING_TIME_IN_MINUTES,
                                 MINIMUM_RECIPE_INGREDIENTS_AMOUNT)
 from users.models import User
@@ -10,9 +11,9 @@ PURPLE = '#8775D2'
 BLUE = '#4A61DD'
 YELLOW = '#F9A62B'
 
-BREAKFAST = 'Завтрак'
-LUNCH = 'Обед'
-DINNER = 'Ужин'
+BREAKFAST = 'breakfast'
+LUNCH = 'lunch'
+DINNER = 'dinner'
 
 
 class Tag(models.Model):
@@ -112,8 +113,6 @@ class Recipes(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         verbose_name='ингридиенты',
-        related_name='recipes',
-        # help_text='Распишите ингредиенты',
     )
     tags = models.ManyToManyField(
         Tag,
@@ -137,6 +136,7 @@ class Recipes(models.Model):
         ordering = ('-pub_date',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
+        default_related_name = 'recipes'
 
     def __str__(self):
         return self.name
@@ -149,7 +149,6 @@ class RecipeIngredientsAmount(models.Model):
         Recipes,
         on_delete=models.CASCADE,
         verbose_name='Название блюда',
-        related_name='ingredients_amount',
     )
     ingredient = models.ForeignKey(
         Ingredient,
@@ -184,23 +183,18 @@ class Favourites(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
-        related_name='favourites',
-        blank=True,
-        null=True
     )
     recipe = models.ForeignKey(
         Recipes,
         on_delete=models.CASCADE,
         verbose_name='Название рецепта',
-        related_name='favourites',
-        blank=True,
-        null=True
     )
 
     class Meta:
 
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранное'
+        default_related_name = 'favourites'
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'recipe'],
@@ -219,23 +213,18 @@ class ShoppingList(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name='Мой список',
-        related_name='shopping_list',
-        blank=True,
-        null=True
     )
     recipe = models.ForeignKey(
         Recipes,
         on_delete=models.CASCADE,
         verbose_name='Спиок рецептов',
-        related_name='shopping_list',
-        blank=True,
-        null=True
     )
 
     class Meta:
 
         verbose_name = 'Список покупок'
         verbose_name_plural = 'Список покупок'
+        default_related_name = 'shopping_list'
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'recipe'],

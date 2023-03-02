@@ -2,7 +2,10 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'u_*_l4cwf_388so4+z*djg72oczshxd*17sqiepmrrf67mac@b'
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    'u_*_l4cwf_388so4+z*djg72oczshxd*17sqiepmrrf67mac@b'
+)
 
 DEBUG = True
 
@@ -56,12 +59,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if os.getenv('DATABASE', default=True):
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE',
+                                default='django.db.backends.postgresql'),
+            'NAME': os.getenv('DB_NAME', default='postgres'),
+            'USER': os.getenv('POSTGRES_USER', default='postgres'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
+            'HOST': os.getenv('DB_HOST', default='db'),
+            'PORT': os.getenv('DB_PORT', default='5432')
+        },
     }
-}
+# else:
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     },
+# }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -88,8 +105,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = '/backend_static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'backend_static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -118,10 +135,8 @@ DJOSER = {
         'current_user': 'api.serializers.UsersListSerializer'
     },
     'PERMISSIONS': {
-        'user': ['api.permissions.AuthorOrReadOnly'],
-        'user_list': ['api.permissions.AuthorOrReadOnly'],
-        # 'user': ['rest_framework.permissions.IsAuthenticated'],
-        # 'user_list': ['rest_framework.permissions.AllowAny'],
+        'user': ['rest_framework.permissions.IsAuthenticated'],
+        'user_list': ['rest_framework.permissions.AllowAny'],
     },
     'HIDE_USRS': False,
     'LOGIN_FIELD': 'email',
