@@ -66,9 +66,9 @@
 
 #### Полсе запуска будет доступна документация
 
-[ReDpc]http://localhost/api/docs/
+[ReDpc](http://localhost/api/docs/)
 
-[Админка]http://localhost/admin/
+[Админка](http://localhost/admin/)
 
 * _Доступ в админку:_
 ```
