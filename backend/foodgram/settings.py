@@ -7,7 +7,7 @@ SECRET_KEY = os.getenv(
     'u_*_l4cwf_388so4+z*djg72oczshxd*17sqiepmrrf67mac@b'
 )
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', default='True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -59,7 +59,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
-if os.getenv('DATABASE', default=True):
+if os.getenv('DATABASE') == 'True':
     DATABASES = {
         'default': {
             'ENGINE': os.getenv('DB_ENGINE',
@@ -71,13 +71,13 @@ if os.getenv('DATABASE', default=True):
             'PORT': os.getenv('DB_PORT', default='5432')
         },
     }
-# else:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     },
-# }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        },
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -95,9 +95,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-Ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -131,7 +131,6 @@ REST_FRAMEWORK = {
 DJOSER = {
     'SERIALIZERS': {
         'user': 'api.serializers.UsersListSerializer',
-        'user_create': 'api.serializers.UserCreateSerializer',
         'current_user': 'api.serializers.UsersListSerializer'
     },
     'PERMISSIONS': {
@@ -143,3 +142,5 @@ DJOSER = {
 }
 
 DRF_API_LOGGER_DATABASE = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

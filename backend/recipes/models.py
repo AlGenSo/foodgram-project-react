@@ -8,12 +8,6 @@ from users.models import User
 ORANGE = '#E26C2D'
 GREEN = '#49B64E'
 PURPLE = '#8775D2'
-BLUE = '#4A61DD'
-YELLOW = '#F9A62B'
-
-BREAKFAST = 'breakfast'
-LUNCH = 'lunch'
-DINNER = 'dinner'
 
 
 class Tag(models.Model):
@@ -23,26 +17,17 @@ class Tag(models.Model):
         (ORANGE, 'Оранжевый'),
         (GREEN, 'Зелёный'),
         (PURPLE, 'Фолетовый'),
-        (BLUE, 'Синий'),
-        (YELLOW, 'Жёлтый')
-    )
-
-    FOOD = (
-        (BREAKFAST, 'Завтрак'),
-        (LUNCH, 'Обед'),
-        (DINNER, 'Ужин')
     )
 
     name = models.CharField(
         verbose_name='Название',
         max_length=200,
-        choices=FOOD,
-        blank=False,
+        blank=False
     )
     color = models.CharField(
         verbose_name='Цветовой HEX-код',
         max_length=7,
-        choices=COLOR,
+        choices=COLOR
     )
     slug = models.SlugField(
         verbose_name='Слаг',

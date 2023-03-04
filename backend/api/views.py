@@ -40,17 +40,19 @@ class UserViewSet(DjoserUserViewSet):
             context={'request': request}
         )
         serializer.is_valid(raise_exception=True)
+        print(str(serializer))
 
         if request.method == 'POST':
             Subscription.objects.create(user=request.user, author=author)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        if request.method == 'DELETE':
-            get_object_or_404(Subscription, user=request.user,
-                              author=author).delete()
-            return Response({'detail': 'Успешная отписка'},
-                            status=status.HTTP_204_NO_CONTENT)
+        get_object_or_404(Subscription,
+                          user=request.user,
+                          author=author).delete()
+
+        return Response({'detail': 'Успешная отписка'},
+                        status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=['GET'], detail=False,
             pagination_class=MyCustomPagination)
@@ -184,6 +186,7 @@ class RecipesViewSet(viewsets.ModelViewSet):
         ingredients = (
             RecipeIngredientsAmount.objects
             .filter(recipes__shopping_list__user=request.user)
+            .order_by('ingredient__name')
             .values_list(
                 'ingredient__name',
                 'amount',
