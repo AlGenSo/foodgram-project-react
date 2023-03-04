@@ -1,7 +1,6 @@
 # Дипломный проект сайт Foodgram
-
-_foodgram-project-react_
 =================================
+*foodgram-project-react*
 
 ### Описание
 
