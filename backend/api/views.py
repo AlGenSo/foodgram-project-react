@@ -142,7 +142,7 @@ class RecipesViewSet(viewsets.ModelViewSet):
                 recipe=recipe
             ).delete()
 
-            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(
         detail=True,

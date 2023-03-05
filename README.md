@@ -3,6 +3,11 @@
 
 *foodgram-project-react*
 
+
+### Статус workflow
+[![Foodgram workflow](https://github.com/AlGenSo/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)](https://github.com/AlGenSo/foodgram-project-react/actions/workflows/foodgram_workflow.yml)
+---
+
 ### Описание
 
 ##### Идея проекта
