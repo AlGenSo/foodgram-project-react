@@ -77,6 +77,6 @@
 
 * _Доступ в админку:_
 ```
-email: User@yandex.ru
+email: 
 passowrd: adminadmin
 ```
