@@ -1,10 +1,14 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
+from django.db.models import Sum
 
 from .models import (Favourites, Ingredient, RecipeIngredientsAmount, Recipes,
                      ShoppingList, Tag)
 
 admin.site.site_header = 'Управление сайтом Foodgram'
 admin.site.site_title = 'Администратор сайта'
+
+admin.site.unregister(Group)
 
 
 class IngredientInline(admin.TabularInline):
@@ -59,8 +63,9 @@ class RecipesAdmin(admin.ModelAdmin):
         'name',
         'image',
         'text',
-        'count',
-        'cooking_time'
+        'cooking_time',
+        'list_ingredients',
+        'count'
     )
     list_editable = (
         'author',
@@ -79,7 +84,29 @@ class RecipesAdmin(admin.ModelAdmin):
     def count(self, obj):
 
         return Favourites.objects.filter(recipe=obj).count()
-    count.short_description = 'Рецепта в избранном'
+    count.short_description = 'В избранном'
+
+    def list_ingredients(self, obj):
+
+        ingredients = (
+            RecipeIngredientsAmount.objects
+            .filter(recipes=obj)
+            .order_by('ingredient__name').values('ingredient')
+            .annotate(total_amount=Sum('amount'))
+            .values_list(
+                'ingredient__name',
+                'ingredient__measurement_unit',
+                'total_amount'
+
+            )
+        )
+        ingredient_list = []
+        [ingredient_list.append('{} ({}.) - {}'.format(*ingredient))
+         for ingredient in ingredients]
+
+        return ingredient_list
+
+    list_ingredients.short_description = 'Ингредиенты'
 
 
 @admin.register(Favourites)

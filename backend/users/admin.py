@@ -13,10 +13,20 @@ class UserAdmin(admin.ModelAdmin):
         'email',
         'first_name',
         'last_name',
+        'count_recipes',
+        'count_subscribers'
     )
     list_filter = ('email', 'username',)
     search_fields = ('email', 'username',)
-    list_editable = ('username', 'first_name', 'last_name',)
+    list_editable = ('username', 'email', 'first_name', 'last_name')
+
+    def count_subscribers(self, obj):
+        return obj.blogger.count()
+    count_subscribers.short_description = 'Подписчиков'
+
+    def count_recipes(self, obj):
+        return obj.recipes.count()
+    count_recipes.short_description = 'Рецептов'
 
 
 @admin.register(Subscription)

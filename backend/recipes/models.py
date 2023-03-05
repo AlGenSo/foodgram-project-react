@@ -63,6 +63,12 @@ class Ingredient(models.Model):
         ordering = ['name']
         verbose_name = 'Ингридиент'
         verbose_name_plural = 'Ингридиенты'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'measurement_unit'],
+                name='unique_ingredient',
+            )
+        ]
 
     def __str__(self):
         return f'{self.name}, {self.measurement_unit}'
@@ -92,20 +98,20 @@ class Recipes(models.Model):
         auto_now_add=True,
     )
     text = models.TextField(
-        verbose_name='Описание рецепта',
+        verbose_name='Описание',
         help_text='Текст рецепта',
     )
     ingredients = models.ManyToManyField(
         Ingredient,
-        verbose_name='ингридиенты',
+        verbose_name='Ингридиенты',
     )
     tags = models.ManyToManyField(
         Tag,
         verbose_name='Тег',
         related_name='recipes',
     )
-    cooking_time = models.IntegerField(
-        verbose_name='Время приготовления в минутах',
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время (мин.)',
         help_text='Время приготовления (в мин.)',
         default=1,
         validators=[
@@ -140,7 +146,7 @@ class RecipeIngredientsAmount(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Название ингредиента',
     )
-    amount = models.IntegerField(
+    amount = models.PositiveSmallIntegerField(
         verbose_name='Количество ингредиентов',
         default=1,
         validators=[
