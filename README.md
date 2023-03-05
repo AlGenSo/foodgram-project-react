@@ -77,6 +77,6 @@
 
 * _Доступ в админку:_
 ```
-email: ***
+email: ****
 passowrd: adminadmin
 ```
