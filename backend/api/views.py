@@ -1,13 +1,3 @@
-from django.contrib.auth import get_user_model
-from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
-from djoser.views import UserViewSet as DjoserUserViewSet
-from rest_framework import mixins, pagination, status, viewsets
-from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-
 from api.filters import IngredientFilter, RecipesFilter
 from api.pagination import MyCustomPagination
 from api.permissions import AuthorOrReadOnly
@@ -15,8 +5,17 @@ from api.serializers import (FaouriteSerializer, IngridientSerializer,
                              RecipeCreateSerializer, RecipeSerializer,
                              ShoppingListSerializer, SubscriptionsSerializer,
                              TagSerializer, UsersListSerializer)
+from django.contrib.auth import get_user_model
+from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from djoser.views import UserViewSet as DjoserUserViewSet
 from recipes.models import (Favourites, Ingredient, RecipeIngredientsAmount,
                             Recipes, ShoppingList, Tag)
+from rest_framework import mixins, pagination, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 from users.models import Subscription
 
 User = get_user_model()

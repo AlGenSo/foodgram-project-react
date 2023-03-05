@@ -1,6 +1,5 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-
 from foodgram.constants import (MINIMUM_COOCING_TIME_IN_MINUTES,
                                 MINIMUM_RECIPE_INGREDIENTS_AMOUNT)
 from users.models import User

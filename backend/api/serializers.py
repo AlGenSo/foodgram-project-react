@@ -3,15 +3,12 @@ import base64
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from djoser.serializers import UserSerializer
-from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
-
-from foodgram.constants import (
-    MINIMUM_COOCING_TIME_IN_MINUTES,
-    MINIMUM_RECIPE_INGREDIENTS_AMOUNT
-)
+from foodgram.constants import (MINIMUM_COOCING_TIME_IN_MINUTES,
+                                MINIMUM_RECIPE_INGREDIENTS_AMOUNT)
 from recipes.models import (Favourites, Ingredient, RecipeIngredientsAmount,
                             Recipes, ShoppingList, Tag)
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from users.models import Subscription
 
 User = get_user_model()
