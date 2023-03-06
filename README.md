@@ -66,8 +66,22 @@
    docker-compose exec backend python manage.py createsuperuser # Создать суперюзера
    docker-compose exec backend python manage.py collectstatic --no-input # Собрать статику
    docker-compose exec backend python manage.py load_csv # загрузить ингредиенты и теги в БД
-```
 
+```
+##### Запуск на сервере
+* _Выполнить push на github_
+* _Войти на сервер:_
+
+```ssh <имя-пользователя>/<ip-servers>```
+
+* _Выолнить команды:_
+
+```
+sudo docker compose exec backend python manage.py migrate #  Вполнить миграции
+sudo docker compose exec backend python manage.py createsuperuser # Создать суперюзера
+sudo docker compose exec backend python manage.py collectstatic --no-input # Собрать статику
+sudo docker compose exec backend python manage.py load_csv # загрузить ингредиенты и теги в БД
+```
 
 #### Полсе запуска будет доступна документация
 
@@ -80,6 +94,7 @@ IP '158.160.3.54'
 * _Доступ в админку:_
 ```
 email: admin@yandex.ru
+login: admin
 passowrd: adminadmin
 ```
 
