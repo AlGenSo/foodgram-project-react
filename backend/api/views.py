@@ -39,7 +39,6 @@ class UserViewSet(DjoserUserViewSet):
             context={'request': request}
         )
         serializer.is_valid(raise_exception=True)
-        print(str(serializer))
 
         if request.method == 'POST':
             Subscription.objects.create(user=request.user, author=author)

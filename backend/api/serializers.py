@@ -2,7 +2,7 @@ import base64
 
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
-from djoser.serializers import UserSerializer
+from djoser.serializers import UserSerializer, UserCreateSerializer
 from foodgram.constants import (MINIMUM_COOCING_TIME_IN_MINUTES,
                                 MINIMUM_RECIPE_INGREDIENTS_AMOUNT)
 from recipes.models import (Favourites, Ingredient, RecipeIngredientsAmount,
@@ -12,6 +12,22 @@ from rest_framework.exceptions import ValidationError
 from users.models import Subscription
 
 User = get_user_model()
+
+
+class UserCreateSerializer(UserCreateSerializer):
+    """Преобразование данных класса User
+        Создание нового пользователя"""
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'email',
+            'username',
+            'first_name',
+            'last_name',
+            'password'
+        )
 
 
 class UsersListSerializer(UserSerializer):
