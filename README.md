@@ -47,7 +47,7 @@
 
 ##### Запуск проекта
 
-* _Клонировать репозиторий: ['git clone'](git@github.com:AlGenSo/foodgram-project-react.git)
+* _Клонировать репозиторий: [git clone](git@github.com:AlGenSo/foodgram-project-react.git)_
 * _Перейти в него в командной строке: `cd foodgram-project-react`_
 * _Cоздать виртуальное окружение: `python -m venv venv`_
 * _Обновить pip: `python -m pip install --upgrade pip`_
