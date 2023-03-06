@@ -71,12 +71,21 @@
 
 #### Полсе запуска будет доступна документация
 
-[ReDpc](http://localhost/api/docs/)
+[ReDpc](http://158.160.3.54/api/docs/)
 
-[Админка](http://localhost/admin/)
+[Админка](http://158.160.3.54/admin/)
+
+IP '158.160.3.54'
 
 * _Доступ в админку:_
 ```
-email: *******
+email: admin@yandex.ru
 passowrd: adminadmin
 ```
+
+---
+---
+
+## Разработчик
+
+*Солодовников Александр*
