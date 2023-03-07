@@ -34,6 +34,7 @@ class UsersListSerializer(UserSerializer):
     """Преобразование списка пользователей"""
 
     is_subscribed = serializers.SerializerMethodField()
+    email = serializers.ReadOnlyField()
     username = serializers.ReadOnlyField()
     first_name = serializers.ReadOnlyField()
     last_name = serializers.ReadOnlyField()
@@ -41,7 +42,6 @@ class UsersListSerializer(UserSerializer):
     class Meta:
 
         model = User
-        read_only_fields = ['email']
         fields = (
             'id',
             'email',
@@ -105,7 +105,7 @@ class SubscriptionsSerializer(UsersListSerializer):
     is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
-        model = Subscription  # User
+        model = Subscription
         fields = (
             'email',
             'id',
