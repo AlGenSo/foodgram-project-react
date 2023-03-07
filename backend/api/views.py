@@ -1,10 +1,3 @@
-from api.filters import IngredientFilter, RecipesFilter
-from api.pagination import MyCustomPagination
-from api.permissions import AuthorOrReadOnly
-from api.serializers import (FaouriteSerializer, IngridientSerializer,
-                             RecipeCreateSerializer, RecipeSerializer,
-                             ShoppingListSerializer, SubscriptionsSerializer,
-                             TagSerializer, UsersListSerializer)
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -12,10 +5,20 @@ from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet as DjoserUserViewSet
 from recipes.models import (Favourites, Ingredient, RecipeIngredientsAmount,
                             Recipes, ShoppingList, Tag)
-from rest_framework import mixins, pagination, status, viewsets
+from rest_framework import pagination, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+
+from .filters import IngredientFilter, RecipesFilter
+from .mixins import RetrieveMixinViewSet
+from .pagination import MyCustomPagination
+from .permissions import AuthorOrReadOnly
+from .serializers import (FaouriteSerializer, IngridientSerializer,
+                          RecipeCreateSerializer, RecipeSerializer,
+                          ShoppingListSerializer, SubscriptionsSerializer,
+                          TagSerializer, UsersListSerializer)
+
 from users.models import Subscription
 
 User = get_user_model()
@@ -67,17 +70,6 @@ class UserViewSet(DjoserUserViewSet):
                                              context={'request': request})
 
         return self.get_paginated_response(serializer.data)
-
-
-class RetrieveMixinViewSet(
-    mixins.RetrieveModelMixin,
-    mixins.ListModelMixin,
-    viewsets.GenericViewSet
-):
-    """Mixin для Ingredient и Tag"""
-    pagination_class = None
-    filter_backends = [DjangoFilterBackend, ]
-    search_fields = ('name',)
 
 
 class IngredientViewSet(RetrieveMixinViewSet):
@@ -150,7 +142,7 @@ class RecipesViewSet(viewsets.ModelViewSet):
         pagination_class=None
     )
     def shopping_cart(self, request, **kwargs):
-        user = self.request.user
+
         recipe = get_object_or_404(self.queryset, id=kwargs['pk'])
         serializer = ShoppingListSerializer(
             recipe,
@@ -161,7 +153,7 @@ class RecipesViewSet(viewsets.ModelViewSet):
 
         if request.method == 'POST':
 
-            ShoppingList.objects.create(user=user, recipe=recipe)
+            ShoppingList.objects.create(user=self.request.user, recipe=recipe)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

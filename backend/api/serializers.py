@@ -3,13 +3,15 @@ import base64
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from djoser.serializers import UserCreateSerializer, UserSerializer
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+from users.models import Subscription
+
 from foodgram.constants import (MINIMUM_COOCING_TIME_IN_MINUTES,
                                 MINIMUM_RECIPE_INGREDIENTS_AMOUNT)
 from recipes.models import (Favourites, Ingredient, RecipeIngredientsAmount,
                             Recipes, ShoppingList, Tag)
-from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
-from users.models import Subscription
+
 
 User = get_user_model()
 
@@ -34,7 +36,6 @@ class UsersListSerializer(UserSerializer):
     """Преобразование списка пользователей"""
 
     is_subscribed = serializers.SerializerMethodField()
-    email = serializers.ReadOnlyField()
     username = serializers.ReadOnlyField()
     first_name = serializers.ReadOnlyField()
     last_name = serializers.ReadOnlyField()
@@ -42,6 +43,7 @@ class UsersListSerializer(UserSerializer):
     class Meta:
 
         model = User
+        read_only_fields = ['email']
         fields = (
             'id',
             'email',
@@ -314,7 +316,7 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
 
         for ingredient in attrs['recipeingredientsamount_set']:
 
-            if ingredient['ingredient'] not in ingredients:
+            if ingredient['ingredient'] in ingredients:
                 ingredients.append(ingredient['ingredient'])
             else:
                 raise serializers.ValidationError(
