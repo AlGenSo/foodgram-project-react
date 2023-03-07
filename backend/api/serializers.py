@@ -315,11 +315,11 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         for ingredient in attrs['recipeingredientsamount_set']:
 
             if ingredient['ingredient'] in ingredients:
-                ingredients.append(ingredient['ingredient'])
-            else:
                 raise serializers.ValidationError(
                     {'ingredients': 'Ингредиент должен быть уникальным!'}
                 )
+            ingredients.append(ingredient['ingredient'])
+
             if int(ingredient['amount']) < MINIMUM_RECIPE_INGREDIENTS_AMOUNT:
                 raise serializers.ValidationError(
                     {'amount': 'Мера объёма|веса не может быть меньше 1!'}
