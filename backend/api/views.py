@@ -9,6 +9,7 @@ from rest_framework import pagination, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from users.models import Subscription
 
 from .filters import IngredientFilter, RecipesFilter
 from .mixins import RetrieveMixinViewSet
@@ -18,8 +19,6 @@ from .serializers import (FaouriteSerializer, IngridientSerializer,
                           RecipeCreateSerializer, RecipeSerializer,
                           ShoppingListSerializer, SubscriptionsSerializer,
                           TagSerializer, UsersListSerializer)
-
-from users.models import Subscription
 
 User = get_user_model()
 

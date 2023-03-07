@@ -11,9 +11,6 @@ services:
 
   backend:
     container_name: foodgram_backend
-    # build:
-    #   context: ../backend
-    #   dockerfile: Dockerfile
     image: alexandryp/foodgram_backend:latest
     restart: always
     volumes:
@@ -29,7 +26,6 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
-    # image: alexandryp/foodgram_frontend:latest
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:

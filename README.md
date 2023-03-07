@@ -45,11 +45,12 @@
 [Postman](https://www.postman.com/downloads/)
 
 
-##### Запуск проекта
+#### Запуск проекта
 
 * _Клонировать репозиторий: `git clone git@github.com:AlGenSo/foodgram-project-react.git`_
 * _Перейти в него в командной строке: `cd foodgram-project-react`_
 * _Cоздать виртуальное окружение: `python -m venv venv`_
+* _Активировать виртуальное окружение: `. venv/Scripts/activate`_
 * _Обновить pip: `python -m pip install --upgrade pip`_
 * _Перейти в папку backend в командной строке: `cd backend`_
 * _Установить зависимости из файла requirements.txt: `pip install -r requirements.txt`_
@@ -66,7 +67,6 @@
    docker-compose exec backend python manage.py createsuperuser # Создать суперюзера
    docker-compose exec backend python manage.py collectstatic --no-input # Собрать статику
    docker-compose exec backend python manage.py load_csv # загрузить ингредиенты и теги в БД
-
 ```
 ##### Запуск на сервере
 * _Выполнить push на github_
